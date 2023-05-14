@@ -148,8 +148,7 @@ static void *coalesce(void *bp){
     }
     //case : 4 
     else{
-        size +=GET_SIZE(HDRP(PREV_BLKP(bp)))+
-            GET_SIZE(FTRP(NEXT_BLKP(bp)));
+        size +=GET_SIZE(HDRP(PREV_BLKP(bp))) + GET_SIZE(FTRP(NEXT_BLKP(bp)));
         PUT(HDRP(PREV_BLKP(bp)), PACK(size, 0));
         PUT(FTRP(NEXT_BLKP(bp)), PACK(size, 0));
         bp=PREV_BLKP(bp);
@@ -193,7 +192,7 @@ static void *extend_heap(size_t words){
     char *bp;
     size_t size;
 
-    size = (words % 2) ?(words+1) *WSIZE : words *WSIZE;
+    size = (words % 2) ? (words+1) *WSIZE : words *WSIZE;
     if((long)(bp = mem_sbrk(size))==-1)
         return NULL;
     
